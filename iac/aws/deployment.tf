@@ -1,6 +1,6 @@
 terraform {
     required_version = ">= 0.11"
-    backend "aws" {
+    backend "s3" {
         bucket = "__tfbucketaccount__"
         key    = "terraform.tfstate"
         region = "__awsregion__"
