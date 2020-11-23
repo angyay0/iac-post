@@ -50,10 +50,4 @@ resource "aws_elastic_beanstalk_environment" "mc-aws-env" {
         name      = "IamInstanceProfile"
         value     = "aws-elasticbeanstalk-ec2-role"
     }
-
-    setting {
-        namespace = "aws:elasticbeanstalk:environment"
-        name = "API_ENDPOINT"
-        value = "https://__backendname__.azurewebsites.net"
-    }
 }
