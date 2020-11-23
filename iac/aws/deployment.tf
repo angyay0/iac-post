@@ -16,6 +16,15 @@ provider "aws" {
 ###############################
 ##   AWS App Components      ##
 ###############################
+resource "aws_s3_bucket" "static-site" {
+  bucket = "__tfbucketstatic__"
+  acl    = "public-read"
+
+  website {
+    index_document = "index.html"
+  }
+}
+
 resource "aws_elastic_beanstalk_application" "mc-aws-app" {
     name = "__sitename__"
     description = "Multicloud IaC Frontend"
