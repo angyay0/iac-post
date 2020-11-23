@@ -38,8 +38,22 @@ resource "azurerm_app_service" "mc-az-app" {
     location = "${azurerm_resource_group.mc-az-group.location}"
     resource_group_name = "${azurerm_resource_group.mc-az-group.name}"
     app_service_plan_id = "${azurerm_app_service_plan.mc-az-plan.id}"
-    
+    https_only = true
+
     site_config {
-        dotnet_core_version = "V3.1"
+        use_32_bit_worker_process = true
+    }
+}
+
+resource "azurerm_template_deployment" "netcoreruntime" {
+    name = "extension"
+    resource_group_name = "${azurerm_resource_group.mc-az-group.name}"
+    template_body = "${file("extension.json")}"
+    deployment_mode = "Incremental"
+    
+    parameters = {
+      "siteName" = "${azurerm_app_service.mc-az-app.name}"
+      "extensionName" = "Microsoft.AspNetCore.AzureAppServices.SiteExtension"
+      "extensionVersion" = "3.1.7"
     }
 }
